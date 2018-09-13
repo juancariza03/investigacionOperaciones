@@ -1,0 +1,50 @@
+# Modelo matemático Cross - Docking
+
+# Conjuntos
+
+set ORIGENES:= 1 2;
+set CROSS_DOCKING:= 1;
+set MERCADOS:= 1 2 3 4 5 6 7 8; 
+
+# Conjuntos Inducidos
+
+set MERCADOS_CD:= 4 5 6;
+set OTROS_MERCADOS:= 1 2 3 7 8;
+
+# Parametros
+
+param COSTO:
+
+	1	2	3	4	5	6	7	8:=
+1	14	24	21	20	21.50	19	17	30
+2	24	15	28	20	18.50	19.50	24	28;
+
+param DEMANDA:=
+
+1	22
+2	14
+3	18
+4	17
+5	15
+6	13
+7	15
+8	20;
+
+param COSTO_CD:
+
+	1:=
+1	11
+2	10;
+
+param CAPACIDAD:=
+
+1	100
+2	45;
+
+param COSTO_MER:
+
+	4	5	6:=
+1	6	5	5;
+
+
+

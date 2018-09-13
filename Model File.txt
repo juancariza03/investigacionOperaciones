@@ -1,0 +1,90 @@
+# Modelo matemático Cross - Docking
+
+# Conjuntos
+
+set ORIGENES; # Planta y almacen indexados por i
+set CROSS_DOCKING;# Plataforma Cross Docking indexado por k
+set MERCADOS; # Mercados indexados por j
+
+# Conjuntos Inducidos
+
+set MERCADOS_CD within MERCADOS; 
+set OTROS_MERCADOS within MERCADOS;
+
+# Parametros
+
+param COSTO{i in ORIGENES, j in MERCADOS}>=0;
+param DEMANDA{j in MERCADOS}>=0;
+param COSTO_CD{i in ORIGENES, k in CROSS_DOCKING}>=0;
+param CAPACIDAD{i in ORIGENES}>=0;
+param COSTO_MER{k in CROSS_DOCKING, j in MERCADOS_CD}>=0;
+
+# Variables
+
+var X{i in ORIGENES, j in MERCADOS}>=0 integer;
+var Y{i in ORIGENES, k in CROSS_DOCKING}>=0 integer;
+var Z{k in CROSS_DOCKING, j in MERCADOS_CD}>=0 integer;
+
+# Funcion Objetivo
+
+minimize COSTO_TOTAL:
+sum{i in ORIGENES, j in MERCADOS}(COSTO[i,j]*X[i,j])+
+sum{i in ORIGENES, k in CROSS_DOCKING}(COSTO_CD[i,k]*Y[i,k])+
+sum{k in CROSS_DOCKING, j in MERCADOS_CD}(COSTO_MER[k,j]*Z[k,j]);
+
+# Restricciones
+
+subject to CAPACIDAD_ORIGENES{i in ORIGENES}:
+sum{j in MERCADOS}(X[i,j])+sum{k in CROSS_DOCKING}(Y[i,k])<=CAPACIDAD[i];
+
+subject to DEMANDA_OTROS{j in OTROS_MERCADOS}:
+sum{i in ORIGENES}(X[i,j])>=DEMANDA[j];
+
+subject to DEMANDA_CROSS{j in MERCADOS_CD}:
+sum{i in ORIGENES}(X[i,j])+sum{k in CROSS_DOCKING}(Z[k,j])>=DEMANDA[j];
+
+subject to BALANCE{k in CROSS_DOCKING}:
+sum{i in ORIGENES}(Y[i,k])=sum{j in MERCADOS_CD}(Z[k,j]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
